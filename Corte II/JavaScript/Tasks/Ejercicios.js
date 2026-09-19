@@ -52,7 +52,7 @@ const estudiante = {
 };
 
 /**
- * TODO: EJERCICIO 5 - Filtrar Empleados
+ * EJERCICIO 5 - Filtrar Empleados
  * Dado el siguiente arreglo:
  * Obtén un nuevo arreglo que contenga únicamente los empleados 
  * cuyo salario sea mayor o igual a 4000.
@@ -64,8 +64,15 @@ const empleados = [
     { nombre: "Sara", salario: 7000 }
 ];
 
+const empleadosFiltrados = empleados.filter(function (empleado) {
+    return empleado.salario >= 4000;
+});
+
+console.log("=== EJERCICIO 5 - Filtrar Empleados ===");
+console.log("Empleados con salario >= 4000:", empleadosFiltrados);
+
 /**
- * TODO: EJERCICIO 6 - Estadísticas de Ventas
+ * EJERCICIO 6 - Estadísticas de Ventas
  * Dado el siguiente arreglo:
  * Calcular:
  *  - Total vendido.
@@ -74,8 +81,21 @@ const empleados = [
  */
 const ventas = [250, 400, 150, 600, 800];
 
+const totalVendido = ventas.reduce(function (acumulador, ventaActual) {
+    return acumulador + ventaActual;
+}, 0);
+
+const ventaMasAlta = Math.max(...ventas);
+
+const promedioVentas = totalVendido / ventas.length;
+
+console.log("\n=== EJERCICIO 6 - Estadísticas de Ventas ===");
+console.log("Total vendido:", totalVendido);       // 2200
+console.log("Venta más alta:", ventaMasAlta);       // 800
+console.log("Promedio de ventas:", promedioVentas); // 440
+
 /**
- * TODO: EJERCICIO 7 - Catálogo de Libros
+ * EJERCICIO 7 - Catálogo de Libros
  * Dado el siguiente arreglo:
  * Realiza las siguientes operaciones:
  *  - Encontrar el libro con id 2.
@@ -101,8 +121,27 @@ const libros = [
     }
 ];
 
+
+const libroId2 = libros.find(function (libro) {
+    return libro.id === 2;
+});
+
+const librosDisponibles = libros.filter(function (libro) {
+    return libro.disponible === true;
+});
+
+
+const titulosLibros = libros.map(function (libro) {
+    return libro.titulo;
+});
+
+console.log("\n=== EJERCICIO 7 - Catálogo de Libros ===");
+console.log("Libro con id 2:", libroId2);
+console.log("Libros disponibles:", librosDisponibles);
+console.log("Solo los títulos:", titulosLibros);
+
 /**
- * TODO: EJERCICIO 8 - Copias y Referencias
+ * EJERCICIO 8 - Copias y Referencias
  * Dado el siguiente objeto:
  * Realiza lo siguiente:
  *  - Crea una copia del usuario utilizando asignación (=).
@@ -119,8 +158,38 @@ const usuario = {
     edad: 30
 };
 
+console.log("\n=== EJERCICIO 8 - Copias y Referencias ===");
+
+
+const copiaAsignacion = usuario;
+copiaAsignacion.nombre = "Andrés";
+
+console.log("-- Copia con asignación (=) --");
+console.log("usuario:", usuario);                 
+console.log("copiaAsignacion:", copiaAsignacion);  
+
+
+const copiaSpread = { ...usuario };
+copiaSpread.nombre = "Mariana";
+
+console.log("-- Copia con Spread (...) --");
+console.log("usuario:", usuario);           
+console.log("copiaSpread:", copiaSpread);   
+
+// --- Explicación de la diferencia ---
+console.log(`
+Explicación:
+- Con la asignación (=), "copiaAsignacion" y "usuario" apuntan al
+  MISMO objeto en memoria. Modificar una modifica la otra, porque
+  no existen dos objetos, sino una sola referencia compartida.
+- Con el operador Spread (...), se crea un objeto completamente
+  NUEVO en memoria, con sus propias propiedades copiadas. Por eso,
+  al modificar "copiaSpread", el objeto "usuario" original permanece
+  intacto.
+`);
+
 /**
- * TODO: EJERCICIO 9 - Desestructuración
+ * EJERCICIO 9 - Desestructuración
  * Dado el siguiente objeto:
  * Realiza las siguientes tareas:
  *  - Extrae las propiedades marca y ram.
@@ -135,8 +204,22 @@ const computador = {
     almacenamiento: 512
 };
 
+
+const {
+    marca,
+    ram,
+    almacenamiento: ssd,
+    tarjetaGrafica = "Integrada"
+} = computador;
+
+console.log("\n=== EJERCICIO 9 - Desestructuración ===");
+console.log("marca:", marca);                     // "Lenovo"
+console.log("ram:", ram);                          // 16
+console.log("ssd (antes almacenamiento):", ssd);   // 512
+console.log("tarjetaGrafica (valor por defecto):", tarjetaGrafica); // "Integrada"
+
 /**
- * TODO: EJERCICIO 10 - Sistema de Gestión de Estudiantes
+ * EJERCICIO 10 - Sistema de Gestión de Estudiantes
  * Dado el siguiente arreglo:
  * Desarrolla un programa que permita:
  *  - Mostrar únicamente los estudiantes aprobados (nota mayor o igual a 3.0).
@@ -175,3 +258,50 @@ const estudiantes2 = [
         edad: 19
     }
 ];
+
+console.log("\n=== EJERCICIO 10 - Sistema de Gestión de Estudiantes ===");
+
+const estudiantesAprobados = estudiantes2.filter(function (estudiante) {
+    return estudiante.nota >= 3.0;
+});
+console.log("1) Aprobados (nota >= 3.0):", estudiantesAprobados);
+
+const estudiantesMayoresDeEdad = estudiantes2.filter(function (estudiante) {
+    return estudiante.edad >= 18;
+});
+console.log("2) Mayores de edad (edad >= 18):", estudiantesMayoresDeEdad);
+
+const nombresEstudiantes = estudiantes2.map(function (estudiante) {
+    return estudiante.nombre;
+});
+console.log("3) Solo nombres:", nombresEstudiantes);
+
+const estudianteId3 = estudiantes2.find(function (estudiante) {
+    return estudiante.id === 3;
+});
+console.log("4) Estudiante con id 3:", estudianteId3);
+
+const sumaNotas = estudiantes2.reduce(function (acumulador, estudiante) {
+    return acumulador + estudiante.nota;
+}, 0);
+const promedioNotas = sumaNotas / estudiantes2.length;
+console.log("5) Promedio de notas:", promedioNotas.toFixed(2));
+
+const estudianteNotaMasAlta = estudiantes2.reduce(function (mejor, actual) {
+    return actual.nota > mejor.nota ? actual : mejor;
+});
+console.log("6) Estudiante con la nota más alta:", estudianteNotaMasAlta);
+
+
+const estudiantesConEstado = estudiantes2.map(function (estudiante) {
+    return {
+        ...estudiante,
+        estado: estudiante.nota >= 3.0 ? "Aprobó" : "Reprobó"
+    };
+});
+console.log("7) Estudiantes con propiedad 'estado':", estudiantesConEstado);
+
+
+const copiaEstudiantes = [...estudiantes2];
+console.log("8) Copia del arreglo con Spread:", copiaEstudiantes);
+console.log("   ¿Es el mismo arreglo en memoria? (===):", copiaEstudiantes === estudiantes2); // false
