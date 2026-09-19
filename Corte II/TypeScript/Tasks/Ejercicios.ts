@@ -74,7 +74,7 @@
 
 
 /**
- * TODO: EJERCICIO 5 - Union Types
+ * EJERCICIO 5 - Union Types
  *
  * Crea una función llamada mostrarDato.
  *
@@ -87,9 +87,23 @@
  * Si recibe un número deberá mostrarlo con dos decimales (uso del toFixed).
  */
 
+function mostrarDato(dato: string | number): void {
+ 
+    if (typeof dato === "string") {
+        console.log("Dato tipo string en mayúsculas:", dato.toUpperCase());
+    } else {
+        console.log("Dato tipo number con dos decimales:", dato.toFixed(2));
+    }
+}
+
+console.log("=== EJERCICIO 5 - Union Types ===");
+mostrarDato("hola mundo"); // -> "HOLA MUNDO"
+mostrarDato(15);           // -> "15.00"
+mostrarDato(7.5);          // -> "7.50"
+
 
 /**
- * TODO: EJERCICIO 6 - Enums
+ * EJERCICIO 6 - Enums
  *
  * Crea un enum llamado EstadoPedido.
  *
@@ -107,13 +121,28 @@
  */
 
 
+enum EstadoPedido {
+    Pendiente,
+    EnProceso,
+    Enviado,
+    Entregado
+}
+
+
+const estadoActual: EstadoPedido = EstadoPedido.Enviado;
+
+console.log("\n=== EJERCICIO 6 - Enums ===");
+console.log("Estado actual (valor numérico):", estadoActual);            
+console.log("Estado actual (nombre):", EstadoPedido[estadoActual]);      
+
+
 /**
  * ==========================================================
  */
 
 
 /**
- * TODO: EJERCICIO 7 - Clases
+ * EJERCICIO 7 - Clases
  *
  * Crea una clase llamada Vehiculo.
  *
@@ -128,9 +157,30 @@
  * Crea dos objetos utilizando la clase.
  */
 
+class Vehiculo {
+    marca: string;
+    modelo: string;
+
+    constructor(marca: string, modelo: string) {
+        this.marca = marca;
+        this.modelo = modelo;
+    }
+
+    mostrarInformacion(): void {
+        console.log(`Vehículo -> Marca: ${this.marca}, Modelo: ${this.modelo}`);
+    }
+}
+
+console.log("\n=== EJERCICIO 7 - Clases ===");
+const vehiculo1 = new Vehiculo("Toyota", "Corolla");
+const vehiculo2 = new Vehiculo("Mazda", "CX-5");
+
+vehiculo1.mostrarInformacion();
+vehiculo2.mostrarInformacion();
+
 
 /**
- * TODO: EJERCICIO 8 - Herencia
+ * EJERCICIO 8 - Herencia
  *
  * Crea una clase Persona.
  *
@@ -148,9 +198,44 @@
  * e imprime toda su información.
  */
 
+class Persona {
+    nombre: string;
+    edad: number;
+
+    constructor(nombre: string, edad: number) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
+    mostrarInformacion(): void {
+        console.log(`Nombre: ${this.nombre}, Edad: ${this.edad}`);
+    }
+}
+
+
+class Estudiante extends Persona {
+    carrera: string;
+
+    constructor(nombre: string, edad: number, carrera: string) {
+        
+        super(nombre, edad);
+        this.carrera = carrera;
+    }
+
+   
+    mostrarInformacion(): void {
+        super.mostrarInformacion(); 
+        console.log(`Carrera: ${this.carrera}`);
+    }
+}
+
+console.log("\n=== EJERCICIO 8 - Herencia ===");
+const estudiante1 = new Estudiante("Sofía", 21, "Ingeniería de Sistemas");
+estudiante1.mostrarInformacion();
+
 
 /**
- * TODO: EJERCICIO 9 - Generics
+ * EJERCICIO 9 - Generics
  *
  * Crea una función genérica llamada
  * obtenerPrimero().
@@ -166,8 +251,24 @@
  */
 
 
+function obtenerPrimero<T>(arreglo: T[]): T {
+    return arreglo[0];
+}
+
+console.log("\n=== EJERCICIO 9 - Generics ===");
+
+const numeros: number[] = [10, 20, 30];
+const palabras: string[] = ["rojo", "verde", "azul"];
+const booleanos: boolean[] = [true, false, true];
+
+
+console.log("Primero de números:", obtenerPrimero(numeros));     // 10
+console.log("Primero de strings:", obtenerPrimero(palabras));    // "rojo"
+console.log("Primero de booleanos:", obtenerPrimero(booleanos)); // true
+
+
 /**
- * TODO: EJERCICIO 10 - Sistema de Usuarios
+ * EJERCICIO 10 - Sistema de Usuarios
  *
  * Desarrolla un pequeño sistema utilizando
  * todo lo aprendido durante el curso.
@@ -193,6 +294,47 @@
  *
  * 6. Mostrar el arreglo final.
  */
+
+type Usuario = {
+    id: number;
+    nombre: string;
+    edad: number;
+    activo: boolean;
+};
+
+
+const usuarios: Usuario[] = [
+    { id: 1, nombre: "Ana", edad: 22, activo: true },
+    { id: 2, nombre: "Luis", edad: 19, activo: false }
+];
+
+function agregarUsuario(nuevoUsuario: Usuario): void {
+    usuarios.push(nuevoUsuario);
+}
+
+
+function buscarUsuarioPorId(id: number): Usuario | undefined {
+    return usuarios.find(function (usuario) {
+        return usuario.id === id;
+    });
+}
+
+function obtenerUsuariosActivos(): Usuario[] {
+    return usuarios.filter(function (usuario) {
+        return usuario.activo === true;
+    });
+}
+
+console.log("\n=== EJERCICIO 10 - Sistema de Usuarios ===");
+
+agregarUsuario({ id: 3, nombre: "Carlos", edad: 25, activo: true });
+
+console.log("Usuario con id 2:", buscarUsuarioPorId(2));
+console.log("Usuario con id 99 (no existe):", buscarUsuarioPorId(99));
+
+console.log("Usuarios activos:", obtenerUsuariosActivos());
+
+console.log("Arreglo final de usuarios:", usuarios);
 
 
 export {};
